@@ -1,0 +1,118 @@
+GIT BRANCHING AND MERGING
+==========================
+
+Aim:
+Create a Git branch, add a header feature, commit, merge, create a merge conflict by changing the same line in two branches, and resolve it.
+
+STEP 1: CREATE REPOSITORY
+-------------------------
+mkdir git-branch-demo
+cd git-branch-demo
+git init
+
+Create index.html and add:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Git Branching</title>
+</head>
+<body>
+    <h1>Welcome</h1>
+</body>
+</html>
+
+Stage and commit:
+git add .
+git commit -m "Initial commit"
+
+STEP 2: CREATE FEATURE BRANCH AND ADD HEADER
+-------------------------------------------
+git branch feature-header
+git switch feature-header
+
+Edit the heading in index.html to:
+<h1>Welcome to My Website</h1>
+
+Commit the feature:
+git add .
+git commit -m "Add header feature"
+
+STEP 3: MERGE FEATURE BRANCH INTO MAIN
+--------------------------------------
+git switch main
+git merge feature-header
+
+STEP 4: CHANGE THE SAME LINE ON MAIN
+------------------------------------
+git switch main
+
+Change the heading in index.html to:
+<h1>Welcome to Main Branch</h1>
+
+Commit:
+git add .
+git commit -m "Update heading in main"
+
+STEP 5: CREATE ANOTHER BRANCH AND CHANGE THE SAME LINE
+------------------------------------------------------
+git switch -c feature-home
+
+Change the same heading in index.html to:
+<h1>Welcome to Feature Branch</h1>
+
+Commit:
+git add .
+git commit -m "Update heading in feature branch"
+
+STEP 6: MERGE AND CREATE CONFLICT
+---------------------------------
+git switch main
+git merge feature-home
+
+Git will report a merge conflict because the same line was changed differently in both branches.
+
+STEP 7: RESOLVE THE CONFLICT
+----------------------------
+Open index.html. It will contain conflict markers similar to:
+
+<<<<<<< HEAD
+<h1>Welcome to Main Branch</h1>
+=======
+<h1>Welcome to Feature Branch</h1>
+>>>>>>> feature-home
+
+Choose the heading to keep (or combine the changes). For example, replace the conflict section with:
+
+<h1>Welcome to My Website</h1>
+
+Remove all conflict markers and save the file.
+
+STEP 8: COMMIT THE RESOLUTION
+------------------------------
+git add index.html
+git commit -m "Resolve merge conflict"
+
+STEP 9: CHECK THE FINAL RESULT
+------------------------------
+git status
+git log --oneline --graph --all
+
+Expected status:
+On branch main
+nothing to commit, working tree clean
+
+QUICK COMMAND REVISION
+---------------------
+git branch                       List branches
+git branch feature-header         Create a branch
+git switch feature-header         Switch to a branch
+git switch -c feature-home        Create and switch to a branch
+git merge feature-header          Merge a branch
+git add .                         Stage changes
+git commit -m "message"           Commit changes
+git status                        Check repository status
+git log --oneline --graph --all    View commit history graph
+
+NOTE:
+If your Git uses "master" as the initial branch instead of "main", use "master" in place of "main" in the commands above.
